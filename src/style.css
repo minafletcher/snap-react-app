@@ -1,3 +1,26 @@
+@import "tailwindcss";
+
+/* NOTES:
+
+- v4 means that you only need the @theme to apply custom themes. 
+- most chatgpt and online tutorials are outdated and don't reflect this
+- don't need the postcss or tailwind config files! don't need those postcss dependencies!
+*/
+
+@layer base {
+    .test-class {
+        @apply underline text-red
+    }
+
+    .nav-padding {
+        @apply px-20 pt-10
+    }
+}
+
+@theme { --color-red: #006609; }
+
+@theme { --text-large: 100px; }
+
 html,
 body,
 #root
@@ -7,5 +30,5 @@ body,
     left: 0;
     width: 100%;
     height: 100%;
-    background: ivory;
+    background: #f1f1de
 }

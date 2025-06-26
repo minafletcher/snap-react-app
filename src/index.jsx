@@ -1,12 +1,16 @@
 import './style.css'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Landing from './Landing.jsx'
+import { BrowserRouter } from 'react-router-dom'
+import SnapStudio from './snapStudio.jsx'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 
 root.render(
-    <>
-    <Landing />
-    </>
+    <React.StrictMode>
+    <BrowserRouter>
+      <SnapStudio />
+    </BrowserRouter>
+  </React.StrictMode>
 )
