@@ -1,14 +1,23 @@
-export default function Landing({setShapes}) {
-    
-    const clearCanvas = () => {
+import { useState } from 'react';
+import CurlyArrow from '../../content/Images/curly_arrow.png'
 
-      setShapes(prev => [])
-    }
+export default function Landing({fadeOut}) {
+
+  return (
+    <div
+      className={`transition-opacity duration-2000 ${
+        fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}
+    >
+      <div className='absolute z-0 flex w-full justify-center top-0 pt-30 pl-100'>
+        <img className="w-10 h-full" src={CurlyArrow}></img>
+      <h1 className="text-lg">Click me to clear the canvas!</h1>
+      </div>
+
+      <div className='absolute z-0 flex w-full h-full justify-center items-center'>
+      <h1 className="text-3xl">Click anywhere to create!</h1>
+      </div>
+    </div>
     
-    return <>
-    <h1 class="text-3xl">
-    Click anywhere to create!
-  </h1>
-  <button class="absolute z-10 left-0 ml-10 p-2.5 border-2 rounded-lg cursor-pointer" onClick={clearCanvas}>Clear Canvas</button>
-  </>
+  );
 }

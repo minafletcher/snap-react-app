@@ -1,10 +1,12 @@
-import SnapPhysics from "./Components/Physics/SnapPhysics";
-import { Canvas } from '@react-three/fiber'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useState, useRef } from 'react'
 import Landing from "./Components/Landing/Landing";
 import Navbar from "./Components/Navbar";
-import ShapesSpawner from "./Components/Landing/ShapesSpawn/ShapesSpawner";
+import CanvasExperience from "./CanvasExperience";
+
+import About from "./Components/About/About";
+import Work from "./Components/Work/Work";
 
 export default function SnapStudio()
 {
@@ -12,28 +14,30 @@ export default function SnapStudio()
     const [shapes, setShapes] = useState([]);
     const shapeIdRef = useRef(0);
 
+    // fade out the "click here to create" text
+      const [fadeOut, setFadeOut] = useState(false);
+    
+      const fade = () => {
+        setFadeOut(true);
+      };
+
 
     return <>
-        
-        <div class="absolute z-0 w-full h-full">
-        <Canvas
-        shadows
-        camera={ {
-            fov: 45,
-            near: 0.1,
-            far: 200,
-            position: [ 0, 0, 12 ],
-        }}
-    >
-        <ShapesSpawner shapeIdRef={shapeIdRef} setShapes={setShapes}/>
-        <SnapPhysics shapes={shapes} shapeCount={shapeIdRef.current}/>
-        
-    </Canvas>
-    </div>
 
-    <Navbar />
-
-    <div class="absolute z-10 bottom-0 flex w-full justify-center pb-10"><Landing setShapes={setShapes}/>
-    </div>
+    <Router>
+          <div className="relative w-full h-full">
+          <div class="absolute z-10 w-full h-full" onClick={fade}>
+            <CanvasExperience shapeIdRef={shapeIdRef} shapes={shapes} setShapes={setShapes}/>
+          </div>
+          <Navbar setShapes={setShapes} />
+    
+          <Routes>
+            <Route path="/" element={<Landing fadeOut={fadeOut} />}></Route>
+            <Route path="*" element={<Landing fadeOut={fadeOut} />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/work" element={<Work />}></Route>
+          </Routes>
+          </div>
+        </Router>
     </>
 }

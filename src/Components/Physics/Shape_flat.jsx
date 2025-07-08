@@ -26,7 +26,7 @@ export default function Shape({shapeObj}) {
   useFrame(({ clock }) => {
     if (floatRef.current) {
       const t = clock.getElapsedTime();
-      floatRef.current.position.y = shapeObj.position.y + Math.sin(t + shapeObj.id) * 0.1; // small bobbing
+      floatRef.current.position.y = shapeObj.position.y + Math.sin(t + shapeObj.id) * 0.02; // small bobbing
     }
   });
 
@@ -38,26 +38,49 @@ export default function Shape({shapeObj}) {
             // if the random shape is a square
             shapeObj.choice == "box" ? 
             <>
-            <boxGeometry args ={[shapeObj.size, shapeObj.size, shapeObj.size]}/>
+            <planeGeometry args ={[shapeObj.size, shapeObj.size]}/>
             <meshStandardMaterial color={shapeObj.color} />
             </> :
             // if the random shape is a rectangle
             shapeObj.choice == "rect" ? 
             <>
-            <boxGeometry args ={[shapeObj.size, 1, 1]}/>
+            <planeGeometry args ={[shapeObj.size, 1]}/>
             <meshStandardMaterial color={shapeObj.color} />
             </> :
             // if the random shape is a sphere
             shapeObj.choice == "sphere" ? 
             <>
-            <sphereGeometry args={[shapeObj.size]}/>
+            <circleGeometry args={[shapeObj.size]}/>
             <meshStandardMaterial color={shapeObj.color} />
             </> :
             // otherwise, the shape is a triangle
             <>
 
-            {/* PRISM */}
-            <primitive object={drawTriangle(shapeObj.size)} attach="geometry" />
+            {/* FLAT TRIANGLE */}
+            <bufferGeometry>
+              {/* draws each point position */}
+            <bufferAttribute
+              attach="attributes-position"
+              array={new Float32Array([
+                0, 1, 0,
+                -1, -1, 0,
+                1, -1, 0,
+              ])}
+              count={3}
+              itemSize={3}
+            />
+            {/* defines normals so the colors accurately reflect light */}
+            <bufferAttribute
+              attach="attributes-normal"
+              array={new Float32Array([
+                0, 0, 1,
+                0, 0, 1,
+                0, 0, 1,
+              ])}
+              count={3}
+              itemSize={3}
+            />
+          </bufferGeometry>
             <meshStandardMaterial color={shapeObj.color} />
             </>
             }
