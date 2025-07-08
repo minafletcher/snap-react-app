@@ -15,10 +15,15 @@ export default function SnapStudio()
     const shapeIdRef = useRef(0);
 
     // fade out the "click here to create" text
+      const [fadeCounter, setFadeCounter] = useState(0);
       const [fadeOut, setFadeOut] = useState(false);
     
       const fade = () => {
-        setFadeOut(true);
+
+        if (fadeCounter == 0) {
+            setFadeOut(true)
+            setFadeCounter(1)
+        }
       };
 
 
