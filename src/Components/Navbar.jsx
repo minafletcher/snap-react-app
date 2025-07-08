@@ -18,7 +18,7 @@ export default function Navbar({setShapes}){
         <div class="navbar-container w-full absolute z-10 top-0">
             <div class="navbar-links flex justify-between items-center nav-padding">
                 <Link to="/work">WORK</Link>
-                {currentPage=="/home" ? <img onClick={clearCanvas} src={Logo} class="w-40"/>
+                {currentPage=="/home" ? <img onClick={clearCanvas} src={Logo} class="w-40 cursor-pointer"/>
                 : <Link to="/home" onClick={clearCanvas}><img src={Logo} class="w-40"/></Link>}
                 <Link to ="/about">ABOUT</Link>
             </div>
