@@ -2,16 +2,14 @@ import { Link } from 'react-router-dom'
 import Logo from '../content/Images/studio_snap_logo.png'
 import { useLocation } from 'react-router-dom'
 
-export default function Navbar({setShapes}){
+export default function Navbar({setClickShapes}){
 
     const location = useLocation();
     const currentPage = location.pathname;
 
     const clearCanvas = () => {
 
-        console.log(currentPage)
-
-      setShapes(prev => [])
+      setClickShapes(prev => [])
     }
 
     return <>
