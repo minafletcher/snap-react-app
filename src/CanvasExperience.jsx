@@ -27,7 +27,7 @@ export default function CanvasExperience({ shapeIdRef, shapes, setShapes }) {
 
             {/* SWITCH BETWEEN 2D and 3D */}
             {/* add "makeDefault" instead of "enabled=true" for when in use */}
-            <OrbitControls makeDefault enableZoom={false} />
+            <OrbitControls enabled={false} enableZoom={false} />
 
             {/* 3D SHADING */}
             {/* <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 3.5 } />
@@ -38,10 +38,7 @@ export default function CanvasExperience({ shapeIdRef, shapes, setShapes }) {
 
             {currentPage == "/home" ? <>
                 <ClickShapesSpawner shapeIdRef={shapeIdRef} setShapes={setShapes} />
-
-                <Physics>
-                    <ClickShapesContainer shapes={shapes} />
-                </Physics>
+                <ClickShapesContainer shapes={shapes} />
             </> :
 
                 currentPage == "/work" ?

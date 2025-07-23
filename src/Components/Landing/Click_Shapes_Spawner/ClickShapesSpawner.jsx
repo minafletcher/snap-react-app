@@ -5,36 +5,36 @@ import { randomShape, randomColor, randomSize, randomRotate } from './ShapesHelp
 
 // this function is used to detect clicks, and spawn a new shape on click
 // clicks are distinguished from drags/moving a shape
-export default function ShapesSpawner({shapeIdRef, setShapes}){
+export default function ShapesSpawner({ shapeIdRef, setShapes }) {
 
-    // same camera and renderer instance as defined in snapStudio Canvas
-    const { camera, gl } = useThree();
+  // same camera and renderer instance as defined in snapStudio Canvas
+  const { camera, gl } = useThree();
 
-    // tracking mouseDownPos to detect dragging
-    const mouseDownPos = useRef(new Vector2());
-    const CLICK_THRESHOLD = 1; // threshold of pixels difference for click
+  // tracking mouseDownPos to detect dragging
+  const mouseDownPos = useRef(new Vector2());
+  const CLICK_THRESHOLD = 1; // threshold of pixels difference for click
 
-    // update the mouseDownPos on mouse down
-    const handleMouseDown = useCallback((event) => {
+  // update the mouseDownPos on mouse down
+  const handleMouseDown = useCallback((event) => {
     mouseDownPos.current.set(event.clientX, event.clientY);
   }, []);
 
-    // function for creating raycaster to detect click and mouse position
-    // detects when the mouse is dragged vs clicked
-    const handleClick = useCallback((event) => {
+  // function for creating raycaster to detect click and mouse position
+  // detects when the mouse is dragged vs clicked
+  const handleClick = useCallback((event) => {
 
-        // finds distance between mouseDown and click
-        const dx = event.clientX - mouseDownPos.current.x;
-        const dy = event.clientY - mouseDownPos.current.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+    // finds distance between mouseDown and click
+    const dx = event.clientX - mouseDownPos.current.x;
+    const dy = event.clientY - mouseDownPos.current.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Considered a drag, not a click
-      if (distance > CLICK_THRESHOLD) {
-        // exit this function call
-        return;
-      }
+    // Considered a drag, not a click
+    if (distance > CLICK_THRESHOLD) {
+      // exit this function call
+      return;
+    }
 
-      // get the bounds of the canvas
+    // get the bounds of the canvas
     const bounds = gl.domElement.getBoundingClientRect();
 
     // converts mouse position to correct values in the canvas
@@ -46,22 +46,22 @@ export default function ShapesSpawner({shapeIdRef, setShapes}){
     // converts from normalized coordinates to world coordinates
     const unprojectedPoint = new Vector3(mouse.x, mouse.y, 0.985).unproject(camera);
 
-      const choice = randomShape()
-      const color = randomColor()
-      const size = randomSize()
-      const rotate = randomRotate()
+    const choice = randomShape()
+    const color = randomColor()
+    const size = randomSize()
+    const rotate = randomRotate()
 
-      setShapes(prev => [
-        ...prev,
-        {
-          id: shapeIdRef.current++,
-          position: unprojectedPoint,
-          choice: choice,
-          color: color,
-          size: size,
-          rotate: rotate
-        }
-      ]);
+    setShapes(prev => [
+      ...prev,
+      {
+        id: shapeIdRef.current++,
+        position: unprojectedPoint,
+        choice: choice,
+        color: color,
+        size: size,
+        rotate: rotate
+      }
+    ]);
 
   }, [camera, gl, setShapes, shapeIdRef]);
 
@@ -71,8 +71,8 @@ export default function ShapesSpawner({shapeIdRef, setShapes}){
     canvas.addEventListener('click', handleClick);
     canvas.addEventListener('mousedown', handleMouseDown);
     return () => {
-        canvas.removeEventListener('click', handleClick);
-        canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('click', handleClick);
+      canvas.removeEventListener('mousedown', handleMouseDown);
     }
   }, [gl, handleMouseDown, handleClick]);
 

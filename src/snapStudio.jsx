@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useState, useRef } from 'react'
 import Landing from "./Components/Landing/Landing";
@@ -10,7 +10,7 @@ import Work from "./Components/Work/Work";
 
 export default function SnapStudio() {
 
-    // LIST OF CLICK SHAPES FOR LANDING PAGE
+    // LIST OF CLICK SHAPES FOR LANDING PAGE for rendering all shapes
     const [click_shapes, setClickShapes] = useState([]);
     const clickShapeIdRef = useRef(0);
 
@@ -37,8 +37,9 @@ export default function SnapStudio() {
                 <Navbar setClickShapes={setClickShapes} />
 
                 <Routes>
-                    <Route path="/" element={<Landing fadeOut={fadeOut} />}></Route>
-                    <Route path="*" element={<Landing fadeOut={fadeOut} />}></Route>
+                    <Route path="/" element={<Navigate to="/home" replace />} />
+                    <Route path="*" element={<Navigate to="/home" replace />} />
+                    <Route path="/home" element={<Landing fadeOut={fadeOut} />} />
                     <Route path="/about" element={<About />}></Route>
                     <Route path="/work" element={<Work />}></Route>
                 </Routes>
