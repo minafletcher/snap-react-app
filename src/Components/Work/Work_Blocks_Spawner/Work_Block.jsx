@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect, useMemo } from 'react';
-
+import * as THREE from 'three';
 import { RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Text, useTexture, useVideoTexture } from "@react-three/drei";
 
@@ -58,7 +58,7 @@ export default function Work_Block({ workBlock }) {
             }}>
             {/* planeGeometry doesn't move in physics- has to be a thin boxGeometry */}
             <boxGeometry args={[workBlock.size, blockHeight, 0.05]} />
-            <meshStandardMaterial color={workBlock.color} />
+            <meshBasicMaterial color={new THREE.Color(workBlock.color)} />
         </mesh>
 
         <Text

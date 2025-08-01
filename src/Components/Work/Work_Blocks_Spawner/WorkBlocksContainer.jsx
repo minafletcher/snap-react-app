@@ -12,7 +12,7 @@ export default function WorkBlocksContainer() {
     // useMemo caches the work_blocks array between re-renders so it doesn't have to recalculate
     const work_blocks = useMemo(() => {
         const blocks = [];
-        const colorOps = ["red", "blue", "yellow", "green", "pink", "purple"];
+        const colorOps = ['#70BEF9', '#FFBA29', '#FF594E', '#9F69FF'];
         const start_y_position = -screenHeight;
 
         var x_pos_flip = 0
