@@ -4,9 +4,11 @@ import { useState, useRef } from 'react'
 import Landing from "./Components/Landing/Landing";
 import Navbar from "./Components/Navbar";
 import CanvasExperience from "./CanvasExperience";
+import ProjectPage from "./Components/Work/Project_Page_Templates/Project_Page_Sm";
 
 import About from "./Components/About/About";
 import Work from "./Components/Work/Work";
+import projects_data from "./content/Projects/projects_data";
 
 export default function SnapStudio() {
 
@@ -26,24 +28,25 @@ export default function SnapStudio() {
         }
     };
 
-
     return <>
 
         <Router>
-            <div className="relative w-full h-full">
-                <div class="absolute z-10 w-full h-full" onClick={fade}>
-                    <CanvasExperience shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
-                </div>
-                <Navbar setClickShapes={setClickShapes} />
-
-                <Routes>
-                    <Route path="/" element={<Navigate to="/home" replace />} />
-                    <Route path="*" element={<Navigate to="/home" replace />} />
-                    <Route path="/home" element={<Landing fadeOut={fadeOut} />} />
-                    <Route path="/about" element={<About />}></Route>
-                    <Route path="/work" element={<Work />}></Route>
-                </Routes>
+            <div className="absolute z-10 w-full h-full invisible" onClick={fade}>
+                <CanvasExperience shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
             </div>
+            <Navbar setClickShapes={setClickShapes} />
+
+            <Routes>
+                <Route path="/" element={<Navigate to="/home" replace />} />
+                <Route path="*" element={<Navigate to="/home" replace />} />
+                <Route path="/home" element={<Landing fadeOut={fadeOut} />} />
+                <Route path="/about" element={<About />}></Route>
+                <Route path="/work" element={<Work />}></Route>
+
+                {projects_data.map((project) => (
+                    <Route key={project.key} path={`/work/${project.slug}`} element={<ProjectPage title={project.title} content={project.content} />}></Route>
+                ))}
+            </Routes>
         </Router>
     </>
 }

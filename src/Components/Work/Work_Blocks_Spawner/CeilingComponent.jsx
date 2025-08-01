@@ -9,7 +9,7 @@ export default function CeilingComponent() {
     const screenHeight = viewport.height;
 
     return <RigidBody type="fixed">
-        <mesh position={[0, 3, 0]}>
+        <mesh position={[0, 3.5, 0]}>
             <boxGeometry args={[viewport.width, 0.01, 1]} />
             <meshStandardMaterial transparent={true} opacity={0} color="gray" />
         </mesh>

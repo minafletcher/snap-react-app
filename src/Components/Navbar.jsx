@@ -13,11 +13,11 @@ export default function Navbar({setClickShapes}){
     }
 
     return <>
-        <div class="navbar-container w-full absolute z-10 top-0">
-            <div class="navbar-links flex justify-between items-center nav-padding">
+        <div className="navbar-container w-full absolute z-10 top-0">
+            <div className="navbar-links flex justify-between items-center nav-padding">
                 <Link to="/work">WORK</Link>
-                {currentPage=="/home" ? <img onClick={clearCanvas} src={Logo} class="w-40 cursor-pointer"/>
-                : <Link to="/home" onClick={clearCanvas}><img src={Logo} class="w-40"/></Link>}
+                {currentPage=="/home" ? <img onClick={clearCanvas} src={Logo} className="w-40 cursor-pointer"/>
+                : <Link to="/home" ><img src={Logo} className="w-40"/></Link>}
                 <Link to ="/about">ABOUT</Link>
             </div>
         </div>

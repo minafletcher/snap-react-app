@@ -13,6 +13,7 @@ export default function ShapesContainer({ shapes }) {
 
     useEffect(() => {
         const objects = meshRefs.current.slice().reverse(); // reverse to prioritize newer shapes on drag
+
         // using more vanilla DragControls from threejs instead of drei
         // Drei just created a wrapper around this class. And for whatever reason, it didn't work with a dynamic objects list!
         const controls = new DragControls(objects, camera, gl.domElement);
