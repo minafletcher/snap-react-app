@@ -8,7 +8,11 @@ import { randomShape, randomColor, randomSize, randomRotate } from './ShapesHelp
 export default function ShapesSpawner({ shapeIdRef, setShapes }) {
 
   // same camera and renderer instance as defined in snapStudio Canvas
-  const { camera, gl } = useThree();
+  const { viewport, camera, gl } = useThree();
+
+    // viewport width is browser width / 100 (490 = 4.9)
+    const screenWidth = viewport.width;
+    const screenHeight = viewport.height;
 
   // tracking mouseDownPos to detect dragging
   const mouseDownPos = useRef(new Vector2());
@@ -48,9 +52,18 @@ export default function ShapesSpawner({ shapeIdRef, setShapes }) {
 
     const choice = randomShape()
     const color = randomColor()
-    const size = randomSize()
+    var size = randomSize()
+
+    if (screenWidth > 7.8) {
+      size = Math.min(size * screenWidth * 0.05, 1.25)
+    }
+    else {
+      size = size * screenWidth * 0.1
+    }
+    
     const rotate = randomRotate()
 
+    console.log("size: " + size)
     setShapes(prev => [
       ...prev,
       {

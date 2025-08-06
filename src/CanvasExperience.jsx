@@ -7,15 +7,19 @@ import WorkBlocksContainer from './Components/Work/Work_Blocks_Spawner/WorkBlock
 import CeilingComponent from './Components/Work/Work_Blocks_Spawner/CeilingComponent';
 import * as THREE from 'three';
 
-export default function CanvasExperience({ shapeIdRef, shapes, setShapes }) {
+export default function CanvasExperience({ fadeClick, shapeIdRef, shapes, setShapes }) {
 
     const location = useLocation();
     const currentPage = location.pathname;
 
     return <div className={`w-full h-full ${currentPage.indexOf("/work/") == 0 ? 'hidden' : 'visible'
-        }`}>
+        }`} onClick={currentPage == "/home" ? fadeClick : null}>
         <Canvas
+
+            orthographic
+
             camera={{
+                zoom: 100,
                 fov: 45,
                 near: 0.1,
                 far: 200,

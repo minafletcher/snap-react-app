@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import React from 'react';
 // import { DragControls } from '@react-three/drei';
-import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+import { DragControls } from '../../../helpers/DragControls.js';
 import { useThree } from '@react-three/fiber';
 import Shape from './Shape_flat';
 
@@ -18,12 +18,17 @@ export default function ShapesContainer({ shapes }) {
         // Drei just created a wrapper around this class. And for whatever reason, it didn't work with a dynamic objects list!
         const controls = new DragControls(objects, camera, gl.domElement);
 
+        
+
         controls.addEventListener('dragstart', () => {
             gl.domElement.style.cursor = 'pointer';
         });
 
         controls.addEventListener('drag', () => {
             gl.domElement.style.cursor = 'pointer';
+
+            controls.rotateSpeed = 10
+
         });
 
         return () => controls.dispose();

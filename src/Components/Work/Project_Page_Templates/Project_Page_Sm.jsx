@@ -1,38 +1,81 @@
-export default function ProjectPage({ title, content }) {
+import * as React from "react";
+import Lightbox from "yet-another-react-lightbox";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import "yet-another-react-lightbox/plugins/counter.css";
+import "yet-another-react-lightbox/styles.css";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
 
-    return <div className="px-40 pt-40">
+export default function ProjectPage({ title, content, images }) {
 
-        {/* PROJECT-TITLE */}
-        <h1 className="text-center pb-3">{"\"" + title + "\""}</h1>
+    const [open, setOpen] = React.useState(false);
 
-        {/* PROJECT-IMAGE */}
-        <div className="pb-10 text-center"><img className="w-full h-full" src={content.image} /></div>
-        
-        {/* PROJECT DESCRIPTION CONTENT*/}
+    const [slideIndex, setSlideIndex] = React.useState(0);
 
-        {/* SYNOPSIS-WRAPPER */}
-        <div className="proj-desc-wrapper">
-            <h2 className="desc-title">SYNOPSIS</h2>
-            <p className="desc-body">{content.synopsis}</p>
+    // image on click to open the lightbox
+    const galleryClick = (open, i) => {
+        setOpen(open)
+        setSlideIndex(i)
+    }
+
+    return <div className="page-wrapper">
+        <div className="page-padding pt-40">
+
+            {/* PROJECT-TITLE */}
+            <div className="proj-title-wrapper"><h1 className="proj-page-title">{title}</h1></div>
+
+            {/* COVER-IMAGE */}
+            <div className="pb-10 text-center"><img className="w-full h-full" src={content.image} /></div>
+
+            {/* PROJECT DESCRIPTION CONTENT*/}
+
+            <div className="grid md:gap-10 md:grid-cols-4 grid-cols-1">
+
+                <div className="proj-header-wrapper"><h2 className="proj-page-header">Synopsis</h2></div>
+                <p className="proj-page-content">{content.synopsis}</p>
+
+
+                {/* CREDITS */}
+
+                <div className="w-full"><h2 className="proj-page-header">Credits</h2></div>
+
+                <div className="proj-page-content" >
+                    {content.credits.map((credit, i) => {
+                        return <p key={i}>{credit}</p>
+                    })}
+                </div>
+
+                {/* NOTES */}
+
+                <div className="proj-header-wrapper"><h2 className="proj-page-header">Notes</h2></div>
+                <p className="proj-page-content">{content.notes}</p>
+
+                {/* IMAGES */}
+                <div className="proj-header-wrapper"><h2 className="proj-page-header">Images</h2></div>
+                <div className="proj-page-content">
+                    <div className="grid gap-5 lg:grid-cols-2 grid-cols-1">
+                    {images.map((img, i) => (
+                        <div key={i} onClick={() => galleryClick(true, i)}>
+                            <img className="w-full hover:cursor-pointer" src={img} alt={`image ${i}`} />
+                        </div>
+                    ))}
+
+                    <Lightbox
+                        open={open}
+                        index={slideIndex}
+                        close={() => setOpen(false)}
+                        slides={images.map((img) => ({
+                            src: img,
+                            title: "Slide title",
+                        }))}
+                        // add ons
+                        plugins={[Counter, Captions]}
+                        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+                        animation={{ swipe: 0 }}
+                    />
+                </div>
+                </div>
             </div>
-
-        {/* CREDITS-WRAPPER */}
-        <div className="proj-desc-wrapper">
-
-            <h2 className="desc-title" >CREDITS</h2>
-
-            <div className="desc-body" >
-                {content.credits.map((credit, i) => {
-                return <p key={i}>{credit}</p>
-            })}
-            </div>
-        </div>
-
-        {/* NOTES-WRAPPER */}
-        <div className="proj-desc-wrapper">
-
-            <h2 className="desc-title" >NOTES</h2>
-            <p className="desc-body">{content.notes}</p>
         </div>
     </div>
 }

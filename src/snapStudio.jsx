@@ -31,8 +31,8 @@ export default function SnapStudio() {
     return <>
 
         <Router>
-            <div className="absolute z-10 w-full h-full invisible" onClick={fade}>
-                <CanvasExperience shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
+            <div className="absolute z-10 w-full h-full invisible">
+                <CanvasExperience fadeClick={fade} shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
             </div>
             <Navbar setClickShapes={setClickShapes} />
 
@@ -44,7 +44,7 @@ export default function SnapStudio() {
                 <Route path="/work" element={<Work />}></Route>
 
                 {projects_data.map((project) => (
-                    <Route key={project.key} path={`/work/${project.slug}`} element={<ProjectPage title={project.title} content={project.content} />}></Route>
+                    <Route key={project.key} path={`/work/${project.slug}`} element={<ProjectPage title={project.title} content={project.content} images={project.content.images} />}></Route>
                 ))}
             </Routes>
         </Router>

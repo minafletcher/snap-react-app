@@ -2,7 +2,7 @@ import test_image from './Images/Feathers_Mcgraw.png'
 import test_video from './Videos/feathers.mp4'
 import MarsSivContent from './Mars-And-Siv/mars_and_siv_content.js'
 import MayNinthContent from './May-Ninth/may_ninth_content.js'
-import mars_image from './Mars-And-Siv/NoVacancyFinalV9_1920_noise.00_01_19_15.Still008.jpg'
+import mars_image from './Mars-And-Siv/Cover-Image/NoVacancyFinalV9_1920_noise.00_01_19_15.Still008.jpg'
 import may_image from './May-Ninth/may-ninth-test.jpg'
 
 const projects_data = [
@@ -12,7 +12,7 @@ const projects_data = [
         slug: "mars-and-siv",
         thumbnail: mars_image,
         thumb_video: test_video,
-        content: MarsSivContent
+        content: MarsSivContent,
     },
     {
         key: 2,
@@ -48,6 +48,14 @@ const projects_data = [
     },
     {
         key: 6,
+        title: "Lorem Ipsum",
+        slug: "lorem-ipsum-4",
+        thumbnail: test_image,
+        thumb_video: test_video,
+        content: MarsSivContent
+    },
+    {
+        key: 7,
         title: "Lorem Ipsum",
         slug: "lorem-ipsum-4",
         thumbnail: test_image,

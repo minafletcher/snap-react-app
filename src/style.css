@@ -7,31 +7,56 @@
 - don't need the postcss or tailwind config files! don't need those postcss dependencies!
 */
 
+
 @layer base {
-    .test-class {
-        @apply underline text-red
+
+    .page-wrapper {
+        @apply w-full
     }
 
-    .nav-padding {
-        @apply px-20 pt-10
+    .page-padding {
+        @apply max-w-7xl mx-auto xl:px-20 md:px-10 px-5 
     }
 
-    .proj-desc-wrapper {
-        @apply flex flex-row gap-10 pb-10;
+    .proj-page-title {
+        @apply w-fit pb-3 hover:italic
     }
 
-    .desc-title {
-        @apply w-[20%];
+    .proj-title-wrapper {
+        @apply w-full flex justify-center
     }
 
-    .desc-body {
-        @apply w-[80%];
+    .proj-page-header {
+        @apply pb-2 w-fit uppercase hover:italic
+    }
+
+    .proj-page-content {
+        @apply md:col-span-3 pb-10 md:pb-0
+    }
+
+    .nav-link {
+        @apply font-bold text-2xl uppercase hover:italic
     }
 }
 
 @theme { --color-red: #006609; }
 
 @theme { --text-large: 100px; }
+
+
+@font-face {
+    font-family: AktivGrotesk;
+    src: url('/Fonts/AktivGrotesk-Regular.otf') format("truetype");
+    font-weight: normal;
+    font-style: normal;
+ }
+
+ @font-face {
+    font-family: AktivGrotesk;
+    src: url('/Fonts/AktivGrotesk-Bold.otf') format("truetype");
+    font-weight: bold;
+    font-style: normal;
+ }
 
 html {
     overflow: auto;
@@ -51,6 +76,8 @@ body,
     overflow-x: hidden;
     scrollbar-color: lightgrey #f1f1de;
     background: #f1f1de;
+    font-family: AktivGrotesk, sans-serif;
+    color: #111111;
 }
 
 /* TYPOGRAPHY HIERARCHY */
