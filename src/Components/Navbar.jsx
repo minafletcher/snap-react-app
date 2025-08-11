@@ -16,8 +16,8 @@ export default function Navbar({ setClickShapes }) {
         <div className="navbar-container w-full absolute z-10 top-0">
             <div className="navbar-links flex justify-between items-center page-padding pt-10">
                 <Link className="nav-link" to="/work">Work</Link>
-                {currentPage == "/home" ? <img onClick={clearCanvas} src={Logo} className="w-40 cursor-pointer" />
-                    : <Link to="/home" ><img src={Logo} className="md:w-40 w-28" /></Link>}
+                {currentPage == "/home" ? <img onClick={clearCanvas} src={Logo} className="nav-logo" />
+                    : <Link to="/home" ><img src={Logo} className="nav-logo" /></Link>}
                 <Link className="nav-link" to="/about">About</Link>
             </div>
         </div>

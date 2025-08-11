@@ -12,7 +12,7 @@ export default function CanvasExperience({ fadeClick, shapeIdRef, shapes, setSha
     const location = useLocation();
     const currentPage = location.pathname;
 
-    return <div className={`w-full h-full ${currentPage.indexOf("/work/") == 0 ? 'hidden' : 'visible'
+    return <div className={`relative z-1 w-full h-full ${currentPage.indexOf("/work/") == 0 ? 'hidden' : 'visible'
         }`} onClick={currentPage == "/home" ? fadeClick : null}>
         <Canvas
 
@@ -38,7 +38,6 @@ export default function CanvasExperience({ fadeClick, shapeIdRef, shapes, setSha
             </> :
 
                 currentPage == "/work" ?
-
                     <Physics gravity={[0, 9.81, 0]}>
                         <CeilingComponent />
                         <WorkBlocksContainer />

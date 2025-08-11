@@ -10,6 +10,8 @@ import About from "./Components/About/About";
 import Work from "./Components/Work/Work";
 import projects_data from "./content/Projects/projects_data";
 
+import ScrollToTop from "./helpers/ScrollToTop";
+
 export default function SnapStudio() {
 
     // LIST OF CLICK SHAPES FOR LANDING PAGE for rendering all shapes
@@ -31,9 +33,9 @@ export default function SnapStudio() {
     return <>
 
         <Router>
-            <div className="absolute z-10 w-full h-full invisible">
-                <CanvasExperience fadeClick={fade} shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
-            </div>
+            <ScrollToTop />
+            
+            <CanvasExperience fadeClick={fade} shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
             <Navbar setClickShapes={setClickShapes} />
 
             <Routes>
@@ -43,8 +45,8 @@ export default function SnapStudio() {
                 <Route path="/about" element={<About />}></Route>
                 <Route path="/work" element={<Work />}></Route>
 
-                {projects_data.map((project) => (
-                    <Route key={project.key} path={`/work/${project.slug}`} element={<ProjectPage title={project.title} content={project.content} images={project.content.images} />}></Route>
+                {projects_data.map((data) => (
+                    <Route key={data.key} path={`/work/${data.project.slug}`} element={<ProjectPage title={data.project.title} content={data.project.content} images={data.project.content.images} />}></Route>
                 ))}
             </Routes>
         </Router>

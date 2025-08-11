@@ -1,11 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { RigidBody, CuboidCollider } from "@react-three/rapier";
+import { RigidBody, CuboidCollider, TrimeshCollider, ConvexHullCollider } from "@react-three/rapier";
 import { Text, useTexture, useVideoTexture } from "@react-three/drei";
 import { useFrame } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 
-export default function Work_Block({ workBlock }) {
+export default function Work_Block({ workBlock, shape }) {
 
     // responsive block layout styles
     const blockHeight = workBlock.blockHeight
@@ -22,27 +23,37 @@ export default function Work_Block({ workBlock }) {
     // const [hovered, setHovered] = useState(true);
     const [scaleHovered, setScaleHovered] = useState(false);
 
-    // On hover state, play or pause the video
-    // useEffect(() => {
-    //     if (videoTexture?.image) {
-    //         if (hovered) {
-    //             videoTexture.image.play();
-    //         } else {
-    //             videoTexture.image.pause();
-    //         }
-    //     }
-
-    // }, [hovered, videoTexture]);
-
     useEffect(() => {
         if (videoTexture?.image) {
-                videoTexture.image.play();
+            videoTexture.image.play();
         }
     }, []);
 
     // const currentTexture = useMemo(() => hovered ? videoTexture : texture, [hovered, videoTexture, texture]);
     const currentTexture = videoTexture;
 
+    // set the geometry based on the chosen shape
+    var geometry;
+
+    const blast = useGLTF('./work-shapes/blast.glb')
+    const pentagon = useGLTF('./work-shapes/pentagon.glb')
+    const half_circle = useGLTF('./work-shapes/half_circle.glb')
+    const triangle = useGLTF('./work-shapes/triangle.glb')
+
+    {
+        shape == "blast" ?
+            geometry = blast.nodes.Plane.geometry
+            :
+            shape == "pentagon" ?
+                geometry = pentagon.nodes.Pentagon.geometry
+                :
+                shape == "half_circle" ?
+                    geometry = half_circle.nodes.Circle.geometry
+                    :
+                    shape == "triangle" ?
+                        geometry = triangle.nodes.Triangle.geometry
+                        : null
+    }
 
     // make the block a link using the useNavigate hook
     const navigate = useNavigate();
@@ -76,31 +87,27 @@ export default function Work_Block({ workBlock }) {
         }
     });
 
-    return <RigidBody gravityScale={- 0.5} enabledTranslations={[false, true, false]} enabledRotations={[false, false, true]} colliders={false}>
+    return <RigidBody scale={1.75} gravityScale={-0.5} position={workBlock.position} rotation={workBlock.rotation} enabledTranslations={[false, true, false]} enabledRotations={[false, false, true]} colliders={false}>
         <group
             ref={groupRef}
-            rotation={workBlock.rotation}
             onClick={() => navigateToProject()}
             // control hover styles + cursor
             onPointerOver={() => {
-                //setHovered(true);
                 document.body.style.cursor = 'pointer';
                 setScaleHovered(true)
             }}
             onPointerOut={() => {
-                // setHovered(false);
                 document.body.style.cursor = 'default';
                 setScaleHovered(false)
             }}
-            position={workBlock.position}
         >
-            <mesh
+            <mesh geometry={geometry}
 
             // make the mesh a link using the useNavigate hook
             >
                 {/* planeGeometry doesn't move in physics- has to be a thin boxGeometry */}
-                <boxGeometry args={[blockWidth, blockHeight, 0.05]} />
-                <meshBasicMaterial color={new THREE.Color(workBlock.color)} />
+                {/* <boxGeometry args={[blockWidth, blockHeight, 0.05]} /> */}
+                <meshBasicMaterial map={currentTexture} transparent />
             </mesh>
 
             <Text
@@ -120,7 +127,7 @@ export default function Work_Block({ workBlock }) {
             </Text>
 
             {/* Image (thumbnail) below text */}
-            <mesh
+            {/* <mesh
                 // image position is relative to the group position
                 position={[
                     - blockWidth / 2 + padding + imageWidth / 2,       // Align left + center image
@@ -130,28 +137,15 @@ export default function Work_Block({ workBlock }) {
             >
                 <planeGeometry args={[imageWidth, imageHeight]} />
                 <meshBasicMaterial map={currentTexture} transparent />
-            </mesh>
+            </mesh> */}
 
         </group>
-        {/* custom Collider allows for a thicker z-axis collision detection (that wouldn't work with a thin z depth) */}
-        <CuboidCollider key={scaleHovered ? "hover" : "default"}
-            ref={colliderRef}
-            args={[
-                (blockWidth * (scaleHovered ? 1.1 : 1)) / 2,
-                (blockHeight * (scaleHovered ? 1.1 : 1)) / 2,
-                0.5,
-            ]}
-            position={workBlock.position}
-            // rotation={
-            //     scaleHovered
-            //         ? [
-            //             workBlock.rotation[0], // tilt X on hover
-            //             workBlock.rotation[1], // tilt Y on hover
-            //             workBlock.rotation[2] + 0.1,      // keep Z the same
-            //         ]
-            //         : workBlock.rotation
-            // }
-            rotation={workBlock.rotation}
-            />
+        {/* custom Collider to match custom geometry */}
+        <ConvexHullCollider
+        key={scaleHovered ? 'hovered' : 'normal'} // Forces remount
+        args={[geometry.attributes.position.array]}
+        scale={scaleHovered ? 1.1 : 1}
+        />
+        {/* <CuboidCollider args={[blockWidth / 2, blockHeight / 2, 0.25]} /> */}
     </RigidBody>
 }

@@ -3,7 +3,6 @@ import Lightbox from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import "yet-another-react-lightbox/plugins/counter.css";
 import "yet-another-react-lightbox/styles.css";
-import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
 export default function ProjectPage({ title, content, images }) {
@@ -46,34 +45,33 @@ export default function ProjectPage({ title, content, images }) {
                 </div>
 
                 {/* NOTES */}
-
-                <div className="proj-header-wrapper"><h2 className="proj-page-header">Notes</h2></div>
-                <p className="proj-page-content">{content.notes}</p>
+                {/* uncomment the two lines below to bring back notes */}
+                {/* <div className="proj-header-wrapper"><h2 className="proj-page-header">Notes</h2></div>
+                <p className="proj-page-content">{content.notes}</p> */}
 
                 {/* IMAGES */}
                 <div className="proj-header-wrapper"><h2 className="proj-page-header">Images</h2></div>
                 <div className="proj-page-content">
                     <div className="grid gap-5 lg:grid-cols-2 grid-cols-1">
-                    {images.map((img, i) => (
-                        <div key={i} onClick={() => galleryClick(true, i)}>
-                            <img className="w-full hover:cursor-pointer" src={img} alt={`image ${i}`} />
-                        </div>
-                    ))}
+                        {images.map((img, i) => (
+                            <div key={i} onClick={() => galleryClick(true, i)}>
+                                <img className="w-full hover:cursor-pointer" src={img} alt={`image ${i}`} />
+                            </div>
+                        ))}
 
-                    <Lightbox
-                        open={open}
-                        index={slideIndex}
-                        close={() => setOpen(false)}
-                        slides={images.map((img) => ({
-                            src: img,
-                            title: "Slide title",
-                        }))}
-                        // add ons
-                        plugins={[Counter, Captions]}
-                        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
-                        animation={{ swipe: 0 }}
-                    />
-                </div>
+                        <Lightbox
+                            open={open}
+                            index={slideIndex}
+                            close={() => setOpen(false)}
+                            slides={images.map((img) => ({
+                                src: img
+                            }))}
+                            // add ons
+                            plugins={[Counter]}
+                            counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+                            animation={{ swipe: 0 }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

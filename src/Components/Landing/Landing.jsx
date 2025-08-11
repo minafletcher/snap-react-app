@@ -9,12 +9,12 @@ export default function Landing({fadeOut}) {
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      <div className='absolute z-0 flex w-full justify-center top-0 pt-30 pl-100'>
+      <div className='absolute z-0 flex flex-col md:flex-row w-full justify-center items-center top-25 md:top-30 md:pl-75'>
         <img className="w-10 h-full" src={CurlyArrow}></img>
       <p className="text-lg">Click me to clear the canvas!</p>
       </div>
 
-      <div className='absolute z-0 flex w-full h-full justify-center items-center'>
+      <div className='absolute top-[50%] z-0 flex w-full text-center justify-center px-5'>
       <h2 className="text-3xl">Click anywhere to create!</h2>
       </div>
     </div>

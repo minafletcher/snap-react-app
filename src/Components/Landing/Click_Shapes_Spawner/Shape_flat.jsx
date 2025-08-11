@@ -1,4 +1,4 @@
-import { DragControls, useGLTF } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef, useEffect, useMemo, forwardRef } from 'react';
 import * as THREE from 'three';
