@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import Landing from "./Components/Landing/Landing";
 import Navbar from "./Components/Navbar";
 import CanvasExperience from "./CanvasExperience";
-import ProjectPage from "./Components/Work/Project_Page_Templates/Project_Page_Sm";
+import ProjectPage from "./Components/Work/Project_Page_Templates/Project_Page.jsx";
 
 import About from "./Components/About/About";
 import Work from "./Components/Work/Work";
@@ -46,7 +46,7 @@ export default function SnapStudio() {
                 <Route path="/work" element={<Work />}></Route>
 
                 {projects_data.map((data) => (
-                    <Route key={data.key} path={`/work/${data.project.slug}`} element={<ProjectPage title={data.project.title} content={data.project.content} images={data.project.content.images} />}></Route>
+                    <Route key={data.key} path={`/work/${data.project.slug}`} element={<ProjectPage title={data.project.title} video={data.project.video_url} content={data.project.content} images={data.project.content.images} />}></Route>
                 ))}
             </Routes>
         </Router>

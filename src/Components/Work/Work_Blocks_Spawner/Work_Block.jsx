@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { RigidBody, CuboidCollider, TrimeshCollider, ConvexHullCollider } from "@react-three/rapier";
 import { Text, useTexture, useVideoTexture } from "@react-three/drei";
@@ -11,11 +11,6 @@ export default function Work_Block({ workBlock, shape }) {
     // responsive block layout styles
     const blockHeight = workBlock.blockHeight
     const blockWidth = workBlock.blockWidth
-
-    const padding = 0.25
-    const textFontSize = 0.2
-    const imageWidth = blockWidth - 0.5
-    const imageHeight = imageWidth * (9 / 16)
 
     // thumbnail textures (Switch between image and video on hover)
     // const texture = useTexture(workBlock.image)
@@ -29,32 +24,6 @@ export default function Work_Block({ workBlock, shape }) {
         }
     }, []);
 
-    // const currentTexture = useMemo(() => hovered ? videoTexture : texture, [hovered, videoTexture, texture]);
-    const currentTexture = videoTexture;
-
-    // set the geometry based on the chosen shape
-    var geometry;
-
-    const blast = useGLTF('./work-shapes/blast.glb')
-    const pentagon = useGLTF('./work-shapes/pentagon.glb')
-    const half_circle = useGLTF('./work-shapes/half_circle.glb')
-    const triangle = useGLTF('./work-shapes/triangle.glb')
-
-    {
-        shape == "blast" ?
-            geometry = blast.nodes.Plane.geometry
-            :
-            shape == "pentagon" ?
-                geometry = pentagon.nodes.Pentagon.geometry
-                :
-                shape == "half_circle" ?
-                    geometry = half_circle.nodes.Circle.geometry
-                    :
-                    shape == "triangle" ?
-                        geometry = triangle.nodes.Triangle.geometry
-                        : null
-    }
-
     // make the block a link using the useNavigate hook
     const navigate = useNavigate();
 
@@ -65,7 +34,6 @@ export default function Work_Block({ workBlock, shape }) {
 
 
     const groupRef = useRef();
-    const colliderRef = useRef();
 
     // animate the block hover
     useFrame(() => {
@@ -76,20 +44,66 @@ export default function Work_Block({ workBlock, shape }) {
                 0.1
             );
 
-            // Rotation animation (slight tilt on hover)
-            // const targetRotation = scaleHovered ? 0.1 : 0; // in radians (~5.7°)
-            // groupRef.current.rotation.z = THREE.MathUtils.lerp(
-            //     groupRef.current.rotation.z,
-            //     targetRotation,
-            //     0.1
-            // );
-
         }
     });
 
-    return <RigidBody scale={1.75} gravityScale={-0.5} position={workBlock.position} rotation={workBlock.rotation} enabledTranslations={[false, true, false]} enabledRotations={[false, false, true]} colliders={false}>
+    // const currentTexture = useMemo(() => hovered ? videoTexture : texture, [hovered, videoTexture, texture]);
+    const currentTexture = videoTexture;
+
+    // set the geometry based on the chosen shape
+    let geometry, textColor;
+
+    let textFontSize;
+
+    textFontSize = workBlock.blockWidth * 0.065
+
+    if (workBlock.blockWidth < (4.81 / 3)) {
+        textFontSize = workBlock.blockWidth * 0.15
+    }
+
+    textColor = "#f1f1de"
+    // set the text based on the chosen shape
+
+    const blast = useGLTF('./work-shapes/blast.glb')
+    const pentagon = useGLTF('./work-shapes/pentagon.glb')
+    const half_circle = useGLTF('./work-shapes/half_circle.glb')
+    const triangle = useGLTF('./work-shapes/triangle.glb')
+
+    {
+        shape == "blast" ?
+            (geometry = blast.nodes.Plane.geometry
+            )
+            :
+            shape == "pentagon" ?
+                (geometry = pentagon.nodes.Pentagon.geometry
+                )
+                :
+                shape == "half_circle" ?
+                    (
+                        geometry = half_circle.nodes.Circle.geometry,
+                        textColor = "#111111"
+                    )
+                    :
+                    shape == "triangle" ?
+                        (
+                            geometry = triangle.nodes.Triangle.geometry,
+                            textColor = "#111111"
+                        )
+                        : null
+    }
+
+
+    return <RigidBody
+        scale={[workBlock.blockWidth * (3 / 5), workBlock.blockHeight * (3 / 5), 1]}
+        gravityScale={-0.33}
+        position={workBlock.position}
+        rotation={workBlock.rotation}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, true]}
+        colliders={false}>
         <group
             ref={groupRef}
+            // make the mesh a link using the useNavigate hook
             onClick={() => navigateToProject()}
             // control hover styles + cursor
             onPointerOver={() => {
@@ -101,51 +115,36 @@ export default function Work_Block({ workBlock, shape }) {
                 setScaleHovered(false)
             }}
         >
-            <mesh geometry={geometry}
-
-            // make the mesh a link using the useNavigate hook
-            >
-                {/* planeGeometry doesn't move in physics- has to be a thin boxGeometry */}
-                {/* <boxGeometry args={[blockWidth, blockHeight, 0.05]} /> */}
+            <mesh geometry={geometry}>
                 <meshBasicMaterial map={currentTexture} transparent />
             </mesh>
 
             <Text
-                // text position is relative to the group position
-                position={[
-                    - blockWidth / 2 + padding,           // left edge + padding
-                    blockHeight / 2 - padding,    // top edge - padding
-                    0.03                       // slightly in front of the box to avoid z-fighting
-                ]} // Slightly in front of the box
+                position={[0, 0, 0.5]}
                 font="./Fonts/AktivGrotesk-Bold.otf"
                 fontSize={textFontSize}
-                color="black"
-                anchorX="left"
-                anchorY="top"
+                color={textColor}
+                anchorX="center"
+                anchorY="middle"
             >
                 {workBlock.title}
             </Text>
 
-            {/* Image (thumbnail) below text */}
-            {/* <mesh
-                // image position is relative to the group position
-                position={[
-                    - blockWidth / 2 + padding + imageWidth / 2,       // Align left + center image
-                    blockHeight / 2 - padding - textFontSize - imageHeight / 2 - 0.2, // Below text
-                    0.031                                       // In front of box
-                ]}
-            >
-                <planeGeometry args={[imageWidth, imageHeight]} />
-                <meshBasicMaterial map={currentTexture} transparent />
-            </mesh> */}
-
         </group>
-        {/* custom Collider to match custom geometry */}
-        <ConvexHullCollider
-        key={scaleHovered ? 'hovered' : 'normal'} // Forces remount
-        args={[geometry.attributes.position.array]}
-        scale={scaleHovered ? 1.1 : 1}
-        />
+
+        {shape == 'blast' ?
+
+            <TrimeshCollider args={[geometry.attributes.position.array, geometry.index.array]} />
+
+            :
+            // custom Collider to match custom geometry
+            < ConvexHullCollider
+                key={scaleHovered ? 'hovered' : 'normal'} // Forces remount
+                args={[geometry.attributes.position.array]}
+                scale={scaleHovered ? 1.1 : 1}
+            />
+        }
+
         {/* <CuboidCollider args={[blockWidth / 2, blockHeight / 2, 0.25]} /> */}
     </RigidBody>
 }

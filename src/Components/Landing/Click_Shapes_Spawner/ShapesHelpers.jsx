@@ -12,11 +12,23 @@ export function randomShape() {
 // function for generating a random color choice from the colors options array
 
 const colors = ['#FF594E', '#FFBA29', '#70BEF9', '#9F69FF']; // red, orange, blue, purple
+// start with a random color, then go in order
+const startColor = colors[Math.floor(Math.random() * colors.length)]
+var colorCount = colors.indexOf(startColor)
 
-export function randomColor() {
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+export function nextColor() {
 
-    return randomColor;
+    const nextColor = colors[colorCount];
+
+    if (colorCount == 3) {
+        colorCount = 0;
+    }
+
+    else {
+        colorCount++;
+    }
+
+    return nextColor;
 }
 
 // generates a random size from 0.5 to 1.5

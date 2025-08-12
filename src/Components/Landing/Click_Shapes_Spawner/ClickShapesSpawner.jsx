@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Plane, Vector2, Vector3, Raycaster } from 'three';
-import { randomShape, randomColor, randomSize, randomRotate } from './ShapesHelpers';
+import { randomShape, nextColor, randomSize, randomRotate } from './ShapesHelpers';
 
 // this function is used to detect clicks, and spawn a new shape on click
 // clicks are distinguished from drags/moving a shape
@@ -51,7 +51,7 @@ export default function ShapesSpawner({ shapeIdRef, setShapes }) {
     const unprojectedPoint = new Vector3(mouse.x, mouse.y, 0.985).unproject(camera);
 
     const choice = randomShape()
-    const color = randomColor()
+    const color = nextColor()
     var size = randomSize()
 
     if (screenWidth > 7.8) {

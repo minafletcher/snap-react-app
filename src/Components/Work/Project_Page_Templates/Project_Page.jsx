@@ -5,7 +5,7 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
 
-export default function ProjectPage({ title, content, images }) {
+export default function ProjectPage({ title, video, content, images }) {
 
     const [open, setOpen] = React.useState(false);
 
@@ -18,13 +18,31 @@ export default function ProjectPage({ title, content, images }) {
     }
 
     return <div className="page-wrapper">
-        <div className="page-padding pt-40">
+        <div className="page-padding pt-40 pb-20">
 
             {/* PROJECT-TITLE */}
             <div className="proj-title-wrapper"><h1 className="proj-page-title">{title}</h1></div>
 
-            {/* COVER-IMAGE */}
-            <div className="pb-10 text-center"><img className="w-full h-full" src={content.image} /></div>
+            {/* PROJECT-VIDEO */}
+            <div
+            // 16:9 aspect ratio (9/16 = 0.5625 = 56.25%)
+            className="relative w-full mb-10 pb-[56.25%] h-0"
+            >
+                <iframe
+                    src={video}
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 0,
+                    }}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title={title}
+                />
+            </div>
 
             {/* PROJECT DESCRIPTION CONTENT*/}
 
@@ -75,5 +93,5 @@ export default function ProjectPage({ title, content, images }) {
                 </div>
             </div>
         </div>
-    </div>
+    </div >
 }

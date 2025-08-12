@@ -15,7 +15,7 @@
     }
 
     .page-padding {
-        @apply max-w-7xl mx-auto xl:px-20 md:px-10 px-5 pb-20
+        @apply max-w-7xl mx-auto xl:px-20 md:px-10 px-5
     }
 
     .proj-page-title {
