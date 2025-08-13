@@ -1,4 +1,5 @@
 import cover_image from './migration-cover.png'
+import { ContentModules } from '../../../helpers/ContentModules';
 
 // gets all images, videos, and video posters from the "Migration" folder in the codebase
 const { images, videos, video_posters } = ContentModules('Migration')

@@ -1,4 +1,5 @@
 import cover_image from './guard-down-cover.png'
+import { ContentModules } from '../../../helpers/ContentModules';
 
 // gets all images, videos, and video posters from the "Guard-Down" folder in the codebase
 const { images, videos, video_posters } = ContentModules('Guard-Down')
