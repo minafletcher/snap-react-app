@@ -55,23 +55,23 @@ export default function Work_Block({ workBlock, shape }) {
 
     let textFontSize;
 
-    textFontSize = workBlock.blockWidth * 0.065
+    textFontSize = workBlock.blockWidth * 0.1
 
-    if (workBlock.blockWidth < (4.81 / 3)) {
-        textFontSize = workBlock.blockWidth * 0.15
+    if (workBlock.blockWidth < (4.81 / 4.25)) {
+        textFontSize = workBlock.blockWidth * 0.25
     }
 
     textColor = "#f1f1de"
     // set the text based on the chosen shape
 
-    const blast = useGLTF('./work-shapes/blast.glb')
+    const rhombus = useGLTF('./work-shapes/rhombus.glb')
     const pentagon = useGLTF('./work-shapes/pentagon.glb')
     const half_circle = useGLTF('./work-shapes/half_circle.glb')
     const triangle = useGLTF('./work-shapes/triangle.glb')
 
     {
-        shape == "blast" ?
-            (geometry = blast.nodes.Plane.geometry
+        shape == "rhombus" ?
+            (geometry = rhombus.nodes.Rhombus.geometry
             )
             :
             shape == "pentagon" ?
@@ -94,7 +94,7 @@ export default function Work_Block({ workBlock, shape }) {
 
 
     return <RigidBody
-        scale={[workBlock.blockWidth * (3 / 5), workBlock.blockHeight * (3 / 5), 1]}
+        scale={[workBlock.blockWidth, workBlock.blockHeight, 1]}
         gravityScale={-0.33}
         position={workBlock.position}
         rotation={workBlock.rotation}
@@ -132,18 +132,18 @@ export default function Work_Block({ workBlock, shape }) {
 
         </group>
 
-        {shape == 'blast' ?
+        {/* {shape == 'rhombus' ?
 
             <TrimeshCollider args={[geometry.attributes.position.array, geometry.index.array]} />
 
-            :
-            // custom Collider to match custom geometry
+            : */}
+            {/* // custom Collider to match custom geometry */}
             < ConvexHullCollider
                 key={scaleHovered ? 'hovered' : 'normal'} // Forces remount
                 args={[geometry.attributes.position.array]}
                 scale={scaleHovered ? 1.1 : 1}
             />
-        }
+        {/* } */}
 
         {/* <CuboidCollider args={[blockWidth / 2, blockHeight / 2, 0.25]} /> */}
     </RigidBody>

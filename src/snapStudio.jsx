@@ -34,7 +34,7 @@ export default function SnapStudio() {
 
         <Router>
             <ScrollToTop />
-            
+
             <CanvasExperience fadeClick={fade} shapeIdRef={clickShapeIdRef} shapes={click_shapes} setShapes={setClickShapes} />
             <Navbar setClickShapes={setClickShapes} />
 
@@ -46,7 +46,13 @@ export default function SnapStudio() {
                 <Route path="/work" element={<Work />}></Route>
 
                 {projects_data.map((data) => (
-                    <Route key={data.key} path={`/work/${data.project.slug}`} element={<ProjectPage title={data.project.title} video={data.project.video_url} content={data.project.content} images={data.project.content.images} />}></Route>
+                    <Route
+                        key={data.key}
+                        path={`/work/${data.project.slug}`}
+                        element={<ProjectPage title={data.project.title}
+                            video={data.project.video_url}
+                            content={data.project.content}
+                        />}></Route>
                 ))}
             </Routes>
         </Router>

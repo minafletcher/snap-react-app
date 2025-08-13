@@ -6,19 +6,22 @@ import Work_Block from './Work_Block.jsx';
 export default function WorkBlocksContainer() {
     const { viewport } = useThree();
 
-    const shapeOps = ['blast', 'pentagon', 'half_circle', 'triangle'];
+    const shapeOps = ['rhombus', 'pentagon', 'half_circle', 'triangle'];
 
     const work_blocks = useMemo(() => {
         const screenWidth = viewport.width;
         const screenHeight = viewport.height;
 
-        const blockWidth = Math.min(screenWidth / 3, screenHeight / 3);
+        // adjust block size for all 4 shapes + some extra for navbar
+        // cap blockWidth at a maximum size 3
+        const blockWidth = Math.min(Math.min(screenWidth / 4.25, screenHeight / 4.25), 3);
+
         const blockHeight = blockWidth;
 
         const blocks = [];
 
-        const rowGap = blockHeight * 1.5; // vertical space between rows
-        const colGap = blockWidth * 1.5; // horizontal space between columns
+        const rowGap = blockHeight * 2.5; // vertical space between rows
+        const colGap = blockWidth * 2.5; // horizontal space between columns
 
         let startY, col, row, x, y;
         for (let i = 0; i < featured_projects.length; i++) {
@@ -33,18 +36,17 @@ export default function WorkBlocksContainer() {
             }
 
             else {
-                startY = screenHeight + blockHeight * (featured_projects.length - 1);
+                startY = screenHeight + blockHeight * (featured_projects.length);
                 row = i;
 
                 x = 0;
             }
 
-            y = startY - row * rowGap;
+            y = startY - (row * rowGap) + 0.5;
 
             blocks.push({
                 key: featured_projects[i].key,
                 title: featured_projects[i].project.title,
-                image: featured_projects[i].project.thumbnail,
                 thumb_video: featured_projects[i].project.thumb_video,
                 position: [x, y, 0],
                 // rotation: [0, 0, (Math.floor(Math.random() * 10) * Math.PI) / 180],

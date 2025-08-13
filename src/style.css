@@ -18,24 +18,29 @@
         @apply max-w-7xl mx-auto xl:px-20 md:px-10 px-5
     }
 
-    .proj-page-title {
-        @apply w-fit pb-3 hover:italic
+
+    .proj-section-wrapper {
+        @apply flex flex-col lg:flex-row
+    }
+
+    .proj-image {
+        @apply w-full h-full object-cover hover:cursor-pointer
     }
 
     .proj-title-wrapper {
-        @apply w-full flex justify-center
+        @apply w-full flex justify-center pb-3
     }
 
     .proj-page-header {
-        @apply pb-2 w-fit uppercase hover:italic
+        @apply flex pb-2 lg:basis-1/4 uppercase
     }
 
     .proj-page-content {
-        @apply md:col-span-3 pb-10 md:pb-0
+        @apply flex flex-col lg:basis-3/4
     }
 
     .nav-link {
-        @apply font-bold text-2xl uppercase hover:italic
+        @apply font-bold text-2xl uppercase
     }
 
     .nav-logo {
@@ -43,9 +48,13 @@
     }
 }
 
-@theme { --color-red: #006609; }
+@theme {
+    --color-red: #006609;
+}
 
-@theme { --text-large: 100px; }
+@theme {
+    --text-large: 100px;
+}
 
 
 @font-face {
@@ -53,14 +62,14 @@
     src: url('/Fonts/AktivGrotesk-Regular.otf') format("truetype");
     font-weight: normal;
     font-style: normal;
- }
+}
 
- @font-face {
+@font-face {
     font-family: AktivGrotesk;
     src: url('/Fonts/AktivGrotesk-Bold.otf') format("truetype");
     font-weight: bold;
     font-style: normal;
- }
+}
 
 html {
     overflow: auto;
@@ -68,8 +77,7 @@ html {
 
 html,
 body,
-#root
-{
+#root {
     position: relative;
     top: 0;
     left: 0;

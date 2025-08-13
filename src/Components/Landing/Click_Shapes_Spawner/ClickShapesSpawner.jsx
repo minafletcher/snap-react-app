@@ -63,7 +63,6 @@ export default function ShapesSpawner({ shapeIdRef, setShapes }) {
     
     const rotate = randomRotate()
 
-    console.log("size: " + size)
     setShapes(prev => [
       ...prev,
       {
