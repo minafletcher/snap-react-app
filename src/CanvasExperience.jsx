@@ -3,9 +3,10 @@ import ClickShapesSpawner from './Components/Landing/Click_Shapes_Spawner/ClickS
 import ClickShapesContainer from './Components/Landing/Click_Shapes_Spawner/ClickShapesContainer'
 import { useLocation } from "react-router-dom";
 import { Physics } from '@react-three/rapier'
-import WorkBlocksContainer from './Components/Work/Work_Blocks_Spawner/WorkBlocksContainer';
-import CeilingComponent from './Components/Work/Work_Blocks_Spawner/CeilingComponent';
+import WorkBlocksContainer from './Components/Work/Work_Blocks/WorkBlocksContainer';
+import CeilingComponent from './Components/Work/Work_Blocks/CeilingComponent';
 import * as THREE from 'three';
+import AboutBlocksContainer from './Components/About/About_Blocks/AboutBlocksContainer';
 
 export default function CanvasExperience({ fadeClick, shapeIdRef, shapes, setShapes }) {
 
@@ -44,7 +45,11 @@ export default function CanvasExperience({ fadeClick, shapeIdRef, shapes, setSha
                     </Physics>
                     :
 
-                    null}
+                    currentPage == "/about" ?
+                            <AboutBlocksContainer />
+                        :
+                        null}
+
 
         </Canvas>
     </div>

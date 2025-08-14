@@ -8,10 +8,6 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Work_Block({ workBlock, shape }) {
 
-    // responsive block layout styles
-    const blockHeight = workBlock.blockHeight
-    const blockWidth = workBlock.blockWidth
-
     // thumbnail textures (Switch between image and video on hover)
     // const texture = useTexture(workBlock.image)
     const videoTexture = useVideoTexture(workBlock.thumb_video, { loop: true, muted: true, start: false });

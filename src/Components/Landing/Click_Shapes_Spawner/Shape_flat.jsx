@@ -1,6 +1,6 @@
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef, useEffect, useMemo, forwardRef } from 'react';
+import { useRef, forwardRef } from 'react';
 import * as THREE from 'three';
 import { AxesHelper } from 'three';
 
