@@ -51,20 +51,13 @@ export default function AboutBlocksContainer() {
     // FLOATING ANIMATION
 
     const circleRef = useRef();
-    const imageRef = useRef();
     const squareRef = useRef();
     const blastRef = useRef();
-    const iconsRef = useRef();
 
     useFrame(({ clock }) => {
         if (circleRef.current) {
             const t = clock.getElapsedTime();
             circleRef.current.position.y = circlePos[1] + Math.sin(t + 1) * 0.02; // small bobbing
-        }
-        // same as the circle
-        if (imageRef.current) {
-            const t = clock.getElapsedTime();
-            imageRef.current.position.y = circlePos[1] + Math.sin(t + 1) * 0.02; // small bobbing
         }
         if (squareRef.current) {
             const t = clock.getElapsedTime();
@@ -74,10 +67,6 @@ export default function AboutBlocksContainer() {
             const t = clock.getElapsedTime();
             blastRef.current.position.y = blastPos[1] + Math.sin(t + 3) * 0.02; // small bobbing
         }
-        if (iconsRef.current) {
-            const t = clock.getElapsedTime();
-            iconsRef.current.position.y = blastPos[1] + Math.sin(t + 3) * 0.02; // small bobbing
-        }
     });
 
     //  ICONS
@@ -85,18 +74,19 @@ export default function AboutBlocksContainer() {
 
     return (
         <group>
-            {/* CIRCLE */}
-            <group>
+            {/* CIRCLE GROUP*/}
+            <group
+                ref={circleRef}
+                position={circlePos}>
+                {/* IMAGE CIRCLE */}
                 <mesh
-                    ref={imageRef}
-                    position={[circlePos[0], circlePos[1], 0.01]}
+                    position={[0, 0, 0.01]}
                 >
                     <circleGeometry args={[circleSize[0] * 0.9]} />
                     <meshBasicMaterial map={circleTexture} />
                 </mesh>
+                {/* BACKGROUND CIRCLE */}
                 <mesh
-                    ref={circleRef}
-                    position={circlePos}
                 >
                     <circleGeometry args={circleSize} />
                     <meshBasicMaterial color={'#70BEF9'} />
@@ -105,10 +95,12 @@ export default function AboutBlocksContainer() {
 
             {/* RECTANGLE */}
             <group
+                ref={squareRef}
+                position={squarePos}
                 rotation={[0, 0, -0.05]}
             >
                 <Text
-                    position={[squarePos[0], squarePos[1] + squareSize[1] / 2, 0.01]}
+                    position={[0, squareSize[1] / 2, 0.01]}
                     fontSize={squareSize[0] * 0.04}
                     color="black"
                     anchorX="center"
@@ -118,33 +110,30 @@ export default function AboutBlocksContainer() {
                 >
                     {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
                 </Text>
-                <mesh ref={squareRef} position={squarePos}>
+                <mesh>
                     <planeGeometry args={squareSize} />
                     <meshBasicMaterial color={'#FF594E'} />
                 </mesh>
             </group>
 
-            <group>
+            <group ref={blastRef} position={blastPos} scale={blastSize}>
                 {/* BLAST BACKGROUND */}
                 <mesh
-                    ref={blastRef}
-                    scale={blastSize}
                     rotation={[0, 0, -0.25]}
-                    position={blastPos}
                     geometry={blastGeometry}
                 >
                     <meshBasicMaterial color={'#FFBA29'} />
                 </mesh>
 
                 {/* ICONS IN 2x2 GRID */}
-                <group ref={iconsRef} position={blastPos}>
+                <group>
                     {["facebook.png", "twitter.png", "instagram.png", "linkedin.png"].map((icon, i) => {
                         const iconTexture = useTexture(`/icons/${icon}`); // adjust path
 
                         // calculate grid position
                         const row = Math.floor(i / 2); // 0 or 1
                         const col = i % 2;             // 0 or 1
-                        const spacing = blastSize[0] * 0.4;          // distance between icons
+                        const spacing = 0.4;          // distance between icons
 
                         const xOffset = (col - 0.5) * spacing; // center grid on blast
                         const yOffset = (0.5 - row) * spacing; // invert y to go top-to-bottom
@@ -159,7 +148,7 @@ export default function AboutBlocksContainer() {
                                 ]}
                                 onClick={() => window.open(`https://www.${iconLinks[i]}`, "_blank")}
                             >
-                                <planeGeometry args={[blastSize[0] * 0.25, blastSize[0] * 0.25]} /> {/* size of the icon */}
+                                <planeGeometry args={[0.25, 0.25]} /> {/* size of the icon */}
                                 <meshBasicMaterial map={iconTexture} transparent />
                             </mesh>
                         );
