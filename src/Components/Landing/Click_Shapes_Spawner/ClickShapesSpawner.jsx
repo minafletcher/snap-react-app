@@ -10,9 +10,9 @@ export default function ShapesSpawner({ shapeIdRef, setShapes }) {
   // same camera and renderer instance as defined in snapStudio Canvas
   const { viewport, camera, gl } = useThree();
 
-    // viewport width is browser width / 100 (490 = 4.9)
-    const screenWidth = viewport.width;
-    const screenHeight = viewport.height;
+  // viewport width is browser width / 100 (490 = 4.9)
+  const screenWidth = viewport.width;
+  const screenHeight = viewport.height;
 
   // tracking mouseDownPos to detect dragging
   const mouseDownPos = useRef(new Vector2());
@@ -60,14 +60,15 @@ export default function ShapesSpawner({ shapeIdRef, setShapes }) {
     else {
       size = size * screenWidth * 0.1
     }
-    
+
     const rotate = randomRotate()
 
     setShapes(prev => [
       ...prev,
       {
         id: shapeIdRef.current++,
-        position: unprojectedPoint,
+        // slightly increase z-position for each new shape (drag controls order was getting messed up before)
+        position: new Vector3(unprojectedPoint.x, unprojectedPoint.y, unprojectedPoint.z + ((shapeIdRef.current + 1) * 0.01)),
         choice: choice,
         color: color,
         size: size,

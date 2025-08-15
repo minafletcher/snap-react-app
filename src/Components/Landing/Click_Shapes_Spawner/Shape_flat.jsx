@@ -58,7 +58,7 @@ const Shape = forwardRef(({ shapeObj }, meshRef) => {
 
   return <group ref={floatRef} rotation={[0, 0, shapeObj.rotate]} position={shapeObj.position}>
     {/* the geometry from the gltf scene needs to be passed to its own mesh */}
-    <mesh ref={meshRef} geometry={geometry} scale={shapeObj.size}>
+    <mesh ref={meshRef} geometry={geometry} scale={shapeObj.size} renderOrder={shapeObj.id}>
       <meshBasicMaterial color={new THREE.Color(shapeObj.color)} vertexColors transparent opacity={1} />
     </mesh>
   </group>

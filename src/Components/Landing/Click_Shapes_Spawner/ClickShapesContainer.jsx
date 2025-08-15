@@ -18,7 +18,7 @@ export default function ShapesContainer({ shapes }) {
         // Drei just created a wrapper around this class. And for whatever reason, it didn't work with a dynamic objects list!
         const controls = new DragControls(objects, camera, gl.domElement);
 
-        
+
 
         controls.addEventListener('dragstart', () => {
             gl.domElement.style.cursor = 'pointer';
